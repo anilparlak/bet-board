@@ -1,7 +1,9 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
+const analyze = process.env.ANALYZE === "true";
 module.exports = (env, argv) => {
   const isProd = argv.mode === "production";
   return {
@@ -54,7 +56,19 @@ module.exports = (env, argv) => {
     },
     plugins: [
       new HtmlWebpackPlugin({ template: "./public/index.html" }),
-      ...(isProd ? [new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" })] : []),
+      ...(isProd
+        ? [new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" })]
+        : []),
+      ...(analyze
+        ? [
+            new BundleAnalyzerPlugin({
+              analyzerMode: "server",
+              analyzerHost: "127.0.0.1",
+              analyzerPort: 8888,
+              openAnalyzer: true,
+            }),
+          ]
+        : []),
     ],
     optimization: {
       splitChunks: { chunks: "all" },

@@ -9,7 +9,8 @@
     "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "analyze": "ANALYZE=true webpack --mode production --config webpack.config.js"
   },
   "keywords": [],
   "author": "",
@@ -54,6 +55,7 @@
     "style-loader": "^4.0.0",
     "typescript": "^7.0.2",
     "webpack": "^5.109.2",
+    "webpack-bundle-analyzer": "^5.3.1",
     "webpack-cli": "^7.2.2",
     "webpack-dev-server": "^6.0.0"
   }
