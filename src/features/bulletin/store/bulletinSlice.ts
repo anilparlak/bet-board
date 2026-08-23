@@ -3,18 +3,18 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../../../app/store";
 
 import { fetchBets } from "../api/bets/betsApi";
-import type { IBetsResponse } from "../types/betsApi.types";
+import type { IBetEvent } from "../types/betsApi.types";
 
-type Status = "idle" | "loading" | "ready" | "error";
+type Status = "idle" | "loading" | "ready" | "failed";
 
 interface BulletinState {
-  betsData: IBetsResponse | null;
+  betsData: IBetEvent[] | null;
   status: Status;
   error: string | null;
 }
 
 const initialState: BulletinState = {
-  betsData: null,
+  betsData: [],
   status: "idle",
   error: null,
 };
@@ -43,10 +43,10 @@ const bulletinSlice = createSlice({
       })
       .addCase(fetchBulletin.fulfilled, (state, action) => {
         state.status = "ready";
-        state.betsData = action.payload;
+        state.betsData = action?.payload?.length > 0 ? [...action.payload] : []
       })
       .addCase(fetchBulletin.rejected, (state, action) => {
-        state.status = "error";
+        state.status = "failed";
         state.error = action.error.message ?? "An unknown error occurred!";
       });
   },

@@ -33,6 +33,4 @@ export interface IBetEvent {
   HEC: boolean;
 }
 
-export interface IBetsResponse {
-  Events: IBetEvent[];
-}
+export type IBetsResponse = IBetEvent[];

@@ -1,8 +1,7 @@
-import BulletinContainer from "features/bulletin/components/BulletinContainer";
-
+import Home from "pages/Home";
 
 function App() {
-  return <BulletinContainer />;
+  return <Home />;
 }
 
 export default App;
