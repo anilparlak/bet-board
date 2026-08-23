@@ -6,7 +6,9 @@ import { persistor, store } from "./app/store";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import Spinner from "shared/components/Spinner/Spinner";
+import { initWebVitals } from "reportWebVitals";
 
+initWebVitals();
 
 createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
