@@ -23,7 +23,12 @@ module.exports = (env, argv) => {
         {
           test: /\.(ts|tsx|js|jsx)$/,
           exclude: /node_modules/,
-          use: "babel-loader",
+          use: {
+            loader: "babel-loader",
+            options: {
+              envName: isProd ? "production" : "development",
+            },
+          },
         },
         {
           test: /\.module\.css$/,

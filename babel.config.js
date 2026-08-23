@@ -1,7 +1,22 @@
-module.exports = {
-  presets: [
-    ["@babel/preset-env", { targets: "defaults" }],
-    ["@babel/preset-react", { runtime: "automatic" }],
-    "@babel/preset-typescript",
-  ],
+module.exports = function (api) {
+  const isProduction = api.env("production");
+
+  return {
+    presets: [
+      [
+        "@babel/preset-env",
+        {
+          targets: "defaults",
+        },
+      ],
+      [
+        "@babel/preset-react",
+        {
+          runtime: "automatic",
+          development: !isProduction,
+        },
+      ],
+      "@babel/preset-typescript",
+    ],
+  };
 };
