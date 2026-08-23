@@ -1,13 +1,23 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import bulletinReducer from "../features/bulletin/store/bulletinSlice";
 import couponReducer from "../features/coupon/store/couponSlice";
- 
-export const store = configureStore({
-  reducer: {
-    bulletin: bulletinReducer,
-    coupon: couponReducer,
-  },
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 
+const persistConfig = {
+  key: "bulletinRoot",
+  storage,
+};
+
+const rootReducer = combineReducers({
+  bulletin: bulletinReducer,
+  coupon: couponReducer,
+});
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
@@ -15,5 +25,6 @@ export const store = configureStore({
     }),
 });
 
+export const persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
