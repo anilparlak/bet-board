@@ -4,11 +4,17 @@ import {
   selectError,
   selectStatus,
 } from "features/bulletin/store/bulletinSlice";
-import { useCallback, useEffect } from "react";
+import { lazy, Suspense, useCallback, useEffect } from "react";
 import styles from "./home.module.css";
 import ErrorState from "shared/components/ErrorState/ErrorState";
-import BulletinContainer from "features/bulletin/components/BulletinContainer";
-import CouponContainer from "features/coupon/components/CouponContainer";
+
+const BulletinContainer = lazy(
+  () => import("features/bulletin/components/BulletinContainer")
+);
+
+const CouponContainer = lazy(
+  () => import("features/coupon/components/CouponContainer")
+);
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -36,12 +42,16 @@ const Home = () => {
             />
           ) : (
             <div className={styles.listArea}>
-              <BulletinContainer />
+              <Suspense fallback={<></>}>
+                <BulletinContainer />
+              </Suspense>
             </div>
           )}
         </main>
         <aside className={styles.aside}>
-          <CouponContainer />
+          <Suspense fallback={<></>}>
+            <CouponContainer />
+          </Suspense>
         </aside>
       </div>
     </div>
