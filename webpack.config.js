@@ -44,9 +44,10 @@ module.exports = (env, argv) => {
                   namedExport: false,
                   exportLocalsConvention: "as-is",
                 },
-                importLoaders: 0,
+                importLoaders: 1,
               },
             },
+            "postcss-loader",
           ],
         },
         {
@@ -55,6 +56,7 @@ module.exports = (env, argv) => {
           use: [
             isProd ? MiniCssExtractPlugin.loader : "style-loader",
             "css-loader",
+            "postcss-loader",
           ],
         },
       ],
