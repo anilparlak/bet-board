@@ -50,6 +50,7 @@
 @media (max-width: 768px) {
   .body {
     grid-template-columns: minmax(0, 1fr);
+    padding: 0;
     padding-bottom: calc(var(--sheet-header-h) + 10px);
   }
 }
